@@ -1,5 +1,6 @@
 package com.lynn.tvapp.data.mapper
 
+import android.text.Html
 import com.lynn.tvapp.data.model.Detail
 import com.lynn.tvapp.data.model.Episode
 import com.lynn.tvapp.data.source.network.model.DetailResponse
@@ -12,10 +13,16 @@ fun DetailResponse?.toDetail() = Detail(
     name = this?.name.orEmpty(),
     rating = this?.rating?.average?.toString() ?: "--",
     image = this?.image?.original ?: "",
-    summary = this?.summary ?: "",
-    episodes =this?.Embedded?.episodes.toEpisodes(),
+    summary = this?.summary?.let {
+        Html.fromHtml(
+            it.replace("\\u003C", "<")
+                .replace("\\u003E", ">"),
+            Html.FROM_HTML_MODE_COMPACT
+        ).toString().trim()
+    } ?: "",
+    episodes = this?.Embedded?.episodes.toEpisodes(),
     cast = this?.Embedded?.cast.toStrings(),
-    premiered = this?.premiered?.toString() ?:""
+    premiered = this?.premiered?.toString() ?: ""
 )
 
 fun EpisodeResponse.toEpisode() = Episode(
