@@ -1,0 +1,30 @@
+## Which part of your submission are you least confident about, and why?
+
+Its the UI, its because i prefer to use xml. thats why i use ChatGPT to generate the UI. its pretty good to be honest.
+
+---
+
+## Describe a moment during this project (or any past project) where you got completely stuck. What did you do, step by step?
+
+There is a time where i got the chance to be a project lead. it is exhausting to make my team to complete the task on time. its either go do it half way and continue the next week or do it till morning.
+
+---
+
+## Imagine: it's Thursday, your task is due Friday, and you realize you misunderstood the requirement, half your work is wrong. What are you doing now? 
+
+Its either tell the truth or salvage anything that can be saved on that day.
+
+---
+
+## Your mentor asks you to change an approach you believe is worse. What do you do?
+
+Tell him is it okay to save this progress and do what he tell me to do after its done. of course i will ask for more time to do it.
+
+---
+
+## What's something technical you taught yourself recently outside of class/work, and how did you learn it?
+
+Its video editing, I usually do it for fun only. I didn't share anything i've edited yet.
+
+
+

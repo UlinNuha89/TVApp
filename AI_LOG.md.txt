@@ -1,0 +1,268 @@
+## What I asked the AI / the problem I was solving 
+
+i want to create showcard which have image, name and rating
+
+## What it gave me 
+
+```kotlin
+@Composable
+fun MovieCard(
+    movie: Movie,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.width(120.dp)
+    ) {
+
+        Card(
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        ) {
+            AsyncImage(
+                model = movie.imageUrl,
+                contentDescription = movie.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(170.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        Text(
+            text = movie.name,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+
+        Text(
+            text = "⭐ ${movie.rating}",
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+}
+```
+
+## What I did: accepted as-is / modified (how?) / rejected (why?) 
+
+it is acceptable. of course i modified the code a bit.
+
+## What I asked the AI / the problem I was solving 
+
+make detail screen to show this model 
+```kotlin
+package com.lynn.tvapp.data.model 
+data class Detail( 
+  var id: Int, 
+  var url: String, 
+  var name: String, 
+  var rating: String, 
+  var image: String, 
+  var summary: String, 
+  var episodes: List<Episode>, 
+  var cast : List<String>
+) 
+data class Episode( 
+  var season: Int, 
+  var number: Int
+)
+```
+
+## What it gave me 
+
+```kotlin
+package com.lynn.tvapp.presentation.detail
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import org.koin.androidx.compose.koinViewModel
+
+@Composable
+fun DetailScreen(
+    viewModel: DetailViewModel = koinViewModel()
+) {
+    val state by viewModel.uiState.collectAsState()
+
+    when {
+
+        state.isLoading -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
+        state.error != null -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(state.error!!)
+            }
+        }
+
+        state.detail != null -> {
+
+            val detail = state.detail!!
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp)
+            ) {
+
+                AsyncImage(
+                    model = detail.image,
+                    contentDescription = detail.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(350.dp),
+                    contentScale = ContentScale.Crop
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = detail.name,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "⭐ ${detail.rating}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "Summary",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(detail.summary)
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = "Cast",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                detail.cast.forEach {
+                    Text("• $it")
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = "Episodes",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                detail.episodes.forEach {
+                    Text("Season ${it.season} Episode ${it.number}")
+                }
+            }
+        }
+    }
+}
+```
+
+## What I did: accepted as-is / modified (how?) / rejected (why?) 
+
+i take what i need to take. the text on succesfull state is okay. but, the other is still bad.
+
+## What I asked the AI / the problem I was solving 
+
+Create floating action button 
+
+## What it gave me 
+
+```kotlin
+ExtendedFloatingActionButton(
+    onClick = { /* ... */ },
+    icon = {
+        Icon(
+            imageVector = Icons.Default.Share,
+            contentDescription = "Share"
+        )
+    },
+    text = {
+        Text("Share")
+    }
+)
+```
+
+## What I did: accepted as-is / modified (how?) / rejected (why?) 
+
+i rejected it and try again a couple times
+
+## What I asked the AI / the problem I was solving 
+
+i want to try throwing an error from data source to try error state and retry function.
+
+## What it gave me 
+
+```kotlin
+class ShowApiDataSource(private val service: TVApiService) : ShowDataSource {
+
+    override suspend fun getShow(): List<ShowResponse> {
+        throw Exception("This is a test error")
+    }
+}
+```
+
+## What I did: accepted as-is / modified (how?) / rejected (why?) 
+
+it is acceptable but then i cant try the retry function so i modified it like this
+```kotlin
+class DetailApiDataSource(private val service: TVApiService): DetailDataSource {
+    override suspend fun getDetail(id: Int?): DetailResponse {
+        if(id==1){
+        return service.getDetail(id)
+        } else throw Exception("This is a test error")
+    }
+}
+```
+
+## One thing the AI got wrong or that I verified myself 
+
+the coil image loader didnt show up but i checked i have allow internet permission import coil3 dependency and on log.d or hard coded text is showing. the ai response is the same as usual check dependency, hard coded url, internet permission and check the model.
+
+apparently there is 2 dependency and the ai only give me 1 dependency. it was a waste of time.
+

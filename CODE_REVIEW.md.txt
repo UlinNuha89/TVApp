@@ -1,0 +1,15 @@
+## Its a viewmodel class
+
+First thing i saw is, its a viewmodel class which u should not do api request. So the network request should be separated into data layer. 
+
+---
+
+## There is load function but didnt use state management
+
+There is a function to load movie list but it doesn't have state management and loading state. Variable movies isn't a livedata just a normal Variable. 
+
+---
+
+## The correct way
+
+The correct way is to create data layer first and then creating state management which is loading, success, error and empty.
