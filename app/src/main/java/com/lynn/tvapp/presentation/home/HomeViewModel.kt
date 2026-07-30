@@ -18,6 +18,9 @@ class HomeViewModel(private val repository: ShowRepository) : ViewModel() {
         getShows()
     }
 
+    fun retry() {
+        getShows()
+    }
     private fun getShows() {
         viewModelScope.launch {
             repository.getShow().collect { result ->
@@ -26,6 +29,7 @@ class HomeViewModel(private val repository: ShowRepository) : ViewModel() {
                         _uiState.update {
                             it.copy(
                                 isLoading = true,
+                                shows = emptyList(),
                                 error = null
                             )
                         }
@@ -34,24 +38,25 @@ class HomeViewModel(private val repository: ShowRepository) : ViewModel() {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                shows = result.payload ?: emptyList()
+                                shows = result.payload ?: emptyList(),
+                                error = null,
                             )
                         }
                     },
-
                     doOnEmpty = {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                shows = emptyList()
+                                shows = emptyList(),
+                                error = "Empty"
                             )
                         }
                     },
-
                     doOnError = {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
+                                shows = emptyList(),
                                 error = result.exception?.message
                             )
                         }

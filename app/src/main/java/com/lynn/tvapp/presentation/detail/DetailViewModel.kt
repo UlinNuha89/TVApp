@@ -1,5 +1,6 @@
 package com.lynn.tvapp.presentation.detail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lynn.tvapp.data.repository.DetailRepository
@@ -16,20 +17,38 @@ class DetailViewModel(
     private val _uiState = MutableStateFlow(DetailUiState())
     val uiState = _uiState.asStateFlow()
 
+    fun retry(id: Int) {
+        getDetail(id)
+    }
+
     fun getDetail(id: Int) {
         viewModelScope.launch {
             repository.getDetail(id).collect { result ->
                 result.proceedWhen(
                     doOnLoading = {
                         _uiState.update {
-                            it.copy(isLoading = true)
+                            it.copy(
+                                isLoading = true,
+                                detail = null,
+                                error = null
+                            )
                         }
                     },
                     doOnSuccess = {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                detail = result.payload
+                                detail = result.payload,
+                                error = null
+                            )
+                        }
+                    },
+                    doOnEmpty = {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                detail = null,
+                                error = "Empty"
                             )
                         }
                     },
@@ -37,6 +56,7 @@ class DetailViewModel(
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
+                                detail = null,
                                 error = result.exception?.message
                             )
                         }
