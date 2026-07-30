@@ -12,6 +12,10 @@ retrofit = "2.9.0"
 okhttp = "4.11.0"
 koin = "4.1.0"
 coil = "3.5.0"
+mockk = "1.13.10"
+coroutine-test = "1.7.2"
+turbine = "1.0.0"
+core-testing = "2.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +47,13 @@ koin-compose-navigation = { module = "io.insert-koin:koin-androidx-compose-navig
 # coil image loader
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+
+#unit test
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+mockk-agent = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
 
 
 [plugins]
