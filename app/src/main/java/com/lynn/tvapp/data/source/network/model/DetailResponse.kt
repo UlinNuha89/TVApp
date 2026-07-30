@@ -2,7 +2,7 @@ package com.lynn.tvapp.data.source.network.model
 
 import com.google.gson.annotations.SerializedName
 import com.lynn.tvapp.data.source.network.model.item.Cast
-import com.lynn.tvapp.data.source.network.model.item.Episode
+import com.lynn.tvapp.data.source.network.model.item.EpisodeResponse
 import com.lynn.tvapp.data.source.network.model.item.Image
 import com.lynn.tvapp.data.source.network.model.item.Rating
 import java.util.Date
@@ -24,6 +24,6 @@ data class DetailResponse(
 )
 
 data class Embedded(
-    @SerializedName("episodes") var episodes: List<Episode>,
+    @SerializedName("episodes") var episodes: List<EpisodeResponse>,
     @SerializedName("cast") var cast: List<Cast>
 )
