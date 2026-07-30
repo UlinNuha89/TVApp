@@ -1,6 +1,6 @@
 package com.lynn.tvapp.presentation.home
 
-import android.widget.Toast
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.lynn.tvapp.presentation.detail.DetailActivity
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -58,12 +59,10 @@ fun HomeScreen(
                 ) { show ->
                     ShowCard(
                         show = show,
-                        onClick = { clickedShow ->
-                            Toast.makeText(
-                                context,
-                                clickedShow.name,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        onClick = {
+                            val intent = Intent(context, DetailActivity::class.java)
+                            intent.putExtra("id", show.id)
+                            context.startActivity(intent)
                         }
                     )
                 }

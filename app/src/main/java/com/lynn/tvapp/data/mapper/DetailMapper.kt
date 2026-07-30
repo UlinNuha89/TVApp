@@ -14,8 +14,8 @@ fun DetailResponse?.toDetail() = Detail(
     image = this?.image?.original ?: "",
     summary = this?.summary ?: "",
     episodes =this?.Embedded?.episodes.toEpisodes(),
-    cast = this?.Embedded?.cast.toStrings()
-
+    cast = this?.Embedded?.cast.toStrings(),
+    premiered = this?.premiered?.toString() ?:""
 )
 
 fun EpisodeResponse.toEpisode() = Episode(
@@ -27,5 +27,5 @@ fun Collection<EpisodeResponse>?.toEpisodes() = this?.map {
 } ?: listOf()
 
 fun Collection<Cast>?.toStrings() = this?.map {
-    it.person.toString()
+    it.person.name
 } ?: listOf()

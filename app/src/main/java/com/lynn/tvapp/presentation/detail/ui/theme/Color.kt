@@ -1,4 +1,4 @@
-package com.lynn.tvapp.ui.theme
+package com.lynn.tvapp.presentation.detail.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

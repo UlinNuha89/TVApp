@@ -1,5 +1,7 @@
 package com.lynn.tvapp.data.model
 
+import java.util.Date
+
 data class Detail(
     var id: Int,
     var url: String,
@@ -8,7 +10,8 @@ data class Detail(
     var image: String,
     var summary: String,
     var episodes: List<Episode>,
-    var cast : List<String>
+    var cast : List<String>,
+    var premiered: String,
     )
 
 data class Episode(
