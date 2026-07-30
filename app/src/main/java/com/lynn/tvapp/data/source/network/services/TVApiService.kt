@@ -16,7 +16,7 @@ interface TVApiService {
     @GET("shows")
     suspend fun getShows(
         @Query("page") page: Int? = 0
-    ): ShowResponse
+    ): List<ShowResponse>
 
     @GET("shows/{id}")
     suspend fun getDetail(
