@@ -1,53 +1,38 @@
-package com.lynn.tvapp.presentation.home
+package com.lynn.tvapp.presentation.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lynn.tvapp.data.model.Show
-import com.lynn.tvapp.data.repository.ShowRepository
+import com.lynn.tvapp.data.repository.DetailRepository
 import com.lynn.tvapp.utils.proceedWhen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: ShowRepository) : ViewModel() {
-    private val _uiState = MutableStateFlow(HomeUiState())
+class DetailViewModel(
+    private val repository: DetailRepository
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(DetailUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        getShows()
-    }
-
-    private fun getShows() {
+    fun getDetail(id: Int) {
         viewModelScope.launch {
-            repository.getShow().collect { result ->
+            repository.getDetail(id).collect { result ->
                 result.proceedWhen(
                     doOnLoading = {
                         _uiState.update {
-                            it.copy(
-                                isLoading = true,
-                                error = null
-                            )
+                            it.copy(isLoading = true)
                         }
                     },
                     doOnSuccess = {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                shows = result.payload ?: emptyList()
+                                detail = result.payload
                             )
                         }
                     },
-
-                    doOnEmpty = {
-                        _uiState.update {
-                            it.copy(
-                                isLoading = false,
-                                shows = emptyList()
-                            )
-                        }
-                    },
-
                     doOnError = {
                         _uiState.update {
                             it.copy(

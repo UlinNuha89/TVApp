@@ -1,16 +1,17 @@
-package com.lynn.tvapp.presentation.home
+package com.lynn.tvapp.presentation.detail
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.lynn.tvapp.presentation.home.ui.theme.TVAppTheme
+import com.lynn.tvapp.presentation.detail.ui.theme.TVAppTheme
 
-class HomeActivity : ComponentActivity() {
+class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val id = intent.getIntExtra("id", 0)
         setContent {
             TVAppTheme {
-                HomeScreen()
+                DetailScreen(id = id)
             }
         }
     }
