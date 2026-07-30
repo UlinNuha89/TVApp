@@ -76,5 +76,9 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp)
     implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.navigation)
+    implementation(libs.coil)
+    implementation(libs.coil.network)
 
 }
