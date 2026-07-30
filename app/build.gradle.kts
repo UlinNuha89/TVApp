@@ -34,6 +34,25 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
+        buildConfig = true
+    }
+    flavorDimensions += "env"
+    productFlavors {
+        create("production") {
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL",
+                value = "\"https://api.tvmaze.com/\""
+            )
+        }
+        create("integration") {
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL",
+                value = "\"https://api.tvmaze.com/\""
+            )
+        }
     }
 }
 
